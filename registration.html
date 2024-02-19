@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="{% static 'css/registration.css'%}">
+</head>
+<body>
+    <div class="container">
+        <h2>Registration </h2>
+        <form id="registrationForm" action="#" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" oninput="validateUsername()" required>
+                <span id="usernameError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" oninput="validateEmail()" required>
+                <span id="emailError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" oninput="validatePassword()" required>
+                <span id="passwordError" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" oninput="validateConfirmPassword()" required>
+                <span id="confirmPasswordError" class="error"></span>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <p class="login-link">Already have an account? <a href="{% url 'member_login' %}">Login here</a></p>
+    </div>
+    <script>
+        function validateUsername() {
+            const username = document.getElementById('username').value;
+            const usernameError = document.getElementById('usernameError');
+            const usernameRegex = /^[a-zA-Z]+$/;
+        
+            if (!username.match(usernameRegex) || username.length < 6) {
+                usernameError.textContent = 'Username must contain at least 6 alphabetic characters.';
+            } else {
+                usernameError.textContent = '';
+            }
+        }        
+        
+        function validateEmail() {
+            const email = document.getElementById('email').value;
+            const emailError = document.getElementById('emailError');
+            const emailRegex = /^[\w-]+(\.[\w-]+)*@([a-zA-Z]+\.)+[a-zA-Z]{2,7}$/;
+        
+            if (!email.match(emailRegex)) {
+                emailError.textContent = 'Invalid email format.';
+            } else {
+                emailError.textContent = '';
+            }
+        }
+        
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const passwordError = document.getElementById('passwordError');
+            const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@#$%^&!])[A-Za-z\d@#$%^&!]{6,}$/;
+        
+            if (!password.match(passwordRegex)) {
+                passwordError.textContent = 'Password must contain one lowercase, one uppercase, one digit, one special character, and be at least 6 characters long.';
+            } else {
+                passwordError.textContent = '';
+            }
+        }
+        
+        function validateConfirmPassword() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+        
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = 'Passwords do not match.';
+            } else {
+                confirmPasswordError.textContent = '';
+            }
+        }
+        
+        {% comment %} const registrationForm = document.getElementById('registrationForm');
+        registrationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+        
+            // Additional validation can be added here before submitting the form
+            // For example, you can check if all error messages are empty before submission
+            // If everything is valid, you can submit the form using registrationForm.submit();
+        }); {% endcomment %}
+    </script>        
+</body>
+</html>
