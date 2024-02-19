@@ -1,0 +1,73 @@
+
+<!-- Inside the head tag -->
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d4b6b6;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-size: cover;
+    background-image: url("{% static 'img/elements/d.jpg' %}");
+}
+
+.container {
+    text-align: center;
+    margin-top: 50px;
+    background-color: #ffffffdf;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(185, 130, 130, 0.2);
+    padding: 40px;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative; /* Add this to make the position relative */
+    z-index: 1; /* Add this to set the stacking context */
+}
+
+
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
