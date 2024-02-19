@@ -1,0 +1,11 @@
+django
+django-crispy-forms
+mysqlclient
+django-import_export
+django-filter
+crispy-forms-foundation-demo
+django-bootstrap4
+django-bootstrap5
+crispy-bootstrap4
+crispy-bootstrap5
+Pillow
