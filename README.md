@@ -20,13 +20,16 @@ Email:user@gmail.com
 Password:test
 
 admin login
+
 Username:admin
 Password:test
 
 trainer login
+
 Email:
 Password:
 
 consultant login
+
 Email:
 Password:
