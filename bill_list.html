@@ -1,0 +1,69 @@
+{% extends 'gym/admin_dashboard.html' %}
+
+{% block cstyle %}
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+/* New CSS for positioning the "Add New Bill" link */
+.add-new-bill {
+    float: right;
+    margin-top: -40px; /* Adjust this value to your preference */
+}
+{% endblock %}
+
+{% block content %}
+    <h2>Bill List</h2>
+    <div class="add-new-bill">
+        <a href="{% url 'bill_add' %}">Add New Bill</a>
+    </div>
+    <table id="customers">
+        <thead>
+            <tr>
+                <th>Due Date</th>
+                <th>Customer ID</th>
+                <th>Mobile No</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Package Type</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+                <tr>
+                    <td>{{ bill.Due_date }}</td>
+                    <td>{{ bill.Customer_id }}</td>
+                    <td>{{ bill.Mobileno }}</td>
+                    <td>{{ bill.From_date }}</td>
+                    <td>{{ bill.To_date }}</td>
+                    <td>{{ bill.Package_Type }}</td>
+                    <td>{{ bill.Amount }}</td>
+                    <td>{{ bill.status }}</td>
+                    <td><a href="{% url 'bill_detail' bill.id %}">View</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
