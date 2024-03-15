@@ -30,6 +30,7 @@
             border-radius: 5px;
             margin: 0 5px; /* Add margin between buttons */
         }
+
     </style>
 
     <h2>Add Consultant</h2>
@@ -38,7 +39,7 @@
         <table>
             {% for field in form %}
             <tr>
-                <td>{{ field.label_tag }}</td>
+                <th>{{ field.label_tag }}</th>
                 <td>{{ field }}</td>
             </tr>
             {% endfor %}
