@@ -8,9 +8,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h2>Registration </h2>
-        <form id="registrationForm" action="#" method="post">
+    <div class="container">++++
+        <h2>Registration</h2>
+        <form id="registrationForm" action="{% url 'registration' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
@@ -34,8 +34,13 @@
                 <span id="confirmPasswordError" class="error"></span>
             </div>
             <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" onchange="calculateAge()" required>
+                <span id="ageError" class="error"></span>
+            </div>
+            <div class="form-group">
                 <label for="age">Age</label>
-                <input type="number" id="age" name="age" oninput="validateAge()" required>
+                <input type="text" id="age" name="age" readonly required>
                 <span id="ageError" class="error"></span>
             </div>
             <div class="form-group">
@@ -48,7 +53,6 @@
                 <input type="number" id="weight" name="weight" oninput="validateWeight()" required>
                 <span id="weightError" class="error"></span>
             </div>
-            
             <div class="form-group">
                 <label for="mobile">Mobile</label>
                 <input type="tel" id="mobile" name="mobile" oninput="validateMobile()" required>
@@ -59,9 +63,7 @@
                 <input type="text" id="address" name="address" oninput="validateAddress()" required>
                 <span id="addressError" class="error"></span>
             </div>
-            <button id="registerButton" type="button">Register</button>
-
-
+            <button id="registerButton" type="submit">Register</button>
         </form>
         <p class="login-link">Already have an account? <a href="{% url 'member_login' %}">Login here</a></p>
     </div>
@@ -114,14 +116,25 @@
             }
         }
 
-        function validateAge() {
-            const age = document.getElementById('age').value;
+        function calculateAge() {
+            const dob = document.getElementById('dob').value;
+            const ageField = document.getElementById('age');
             const ageError = document.getElementById('ageError');
-            
-            if (age < 18 || age > 100) {
-                ageError.textContent = 'Please enter a valid age (between 18 and 100).';
+            const today = new Date();
+            const birthDate = new Date(dob);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const month = today.getMonth() - birthDate.getMonth();
+
+            if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            if (age < 18 || age > 90) {
+                ageError.textContent = 'Please enter a valid age (between 18 and 90).';
+                ageField.value = '';
             } else {
                 ageError.textContent = '';
+                ageField.value = age;
             }
         }
     
@@ -141,22 +154,20 @@
             const weight = document.getElementById('weight').value;
             const weightError = document.getElementById('weightError');
         
-            if (weight < 20 || weight > 500) {  // Adjust the range according to your requirements
-                weightError.textContent = 'Please enter a valid weight (between 20 and 500 kg).';  // Update the error message as needed
+            if (weight < 20 || weight > 500) {
+                weightError.textContent = 'Please enter a valid weight (between 20 and 500 kg).';
             } else {
                 weightError.textContent = '';
             }
         }
         
-        
-        
         function validateMobile() {
             const mobile = document.getElementById('mobile').value;
             const mobileError = document.getElementById('mobileError');
-            const mobileRegex = /^\d{10}$/;  // Adjust the regular expression according to your requirements
+            const mobileRegex = /^\d{10}$/;
         
-            if (!mobile.match(mobileRegex)) {
-                mobileError.textContent = 'Please enter a valid 10-digit mobile number.';  // Update the error message as needed
+            if (!mobile.match(mobileRegex) || mobile === '0000000000' || mobile.startsWith('0')) {
+                mobileError.textContent = 'Please enter a valid 10-digit mobile number.';
             } else {
                 mobileError.textContent = '';
             }
@@ -166,46 +177,12 @@
             const address = document.getElementById('address').value;
             const addressError = document.getElementById('addressError');
         
-            if (address.length < 50) {  // Adjust the minimum length according to your requirements
-                addressError.textContent = 'Please enter a valid address (at least 5 characters).';  // Update the error message as needed
+            if (address.length < 5) {
+                addressError.textContent = 'Please enter a valid address.';
             } else {
                 addressError.textContent = '';
             }
         }
-
-
-
-        document.getElementById('registerButton').addEventListener('click', function() {
-            // Check if all required fields are filled
-            var username = document.getElementById('username').value;
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
-            var confirmPassword = document.getElementById('confirmPassword').value;
-            var age = document.getElementById('age').value;
-            var height = document.getElementById('height').value;
-            var weight = document.getElementById('weight').value;
-            var address = document.getElementById('address').value;
-            var mobile = document.getElementById('mobile').value;
-        
-            if (username.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === '' || age.trim() === '' || height.trim() === '' || weight.trim() === '' || address.trim() === '' || mobile.trim() === '') {
-                alert('Please fill in all fields.');
-            } else {
-                // Redirect to member login page
-                window.location.href = "{% url 'member_login' %}";
-            }
-        });
-        
-        
-        
-        {% comment %} const registrationForm = document.getElementById('registrationForm');
-        registrationForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-        
-            // Additional validation can be added here before submitting the form
-            // For example, you can check if all error messages are empty before submission
-            // If everything is valid, you can submit the form using registrationForm.submit();
-        }); {% endcomment %}
     </script>   
-         
 </body>
 </html>
