@@ -25,7 +25,7 @@ SECRET_KEY = 'ap@g*#f805s$=c0ad!!%%b9(d1#%knjmpw23vpczn%j!@w_*vv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -148,11 +148,9 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'static/'),
-  
-)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 #DataFlair #User_Uploaded_Files
 MEDIA_URL = '/img/'
