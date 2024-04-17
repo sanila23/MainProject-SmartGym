@@ -225,37 +225,40 @@
     }
 </style>        
     
-    <script>
-        function calculateBMI() {
-            var height = parseFloat(document.getElementById("height").value) / 100; // Convert height to meters
-            var weight = parseFloat(document.getElementById("weight").value);
-            var age = parseInt(document.getElementById("age").value);
-            var sex = document.getElementById("sex").value;
-    
-            var bmi = weight / (height * height);
-            var resultText = "Your BMI is " + bmi.toFixed(2) + ". ";
-    
-            if (isNaN(bmi)) {
-                resultText = "Please enter valid height and weight.";
-            } else {
-                if (age < 18) {
-                    resultText += "BMI for children and teens is interpreted differently.";
-                } else {
-                    if (bmi < 18.5) {
-                        resultText += "You are underweight.";
-                    } else if (bmi >= 18.5 && bmi < 25) {
-                        resultText += "You have a normal weight.";
-                    } else if (bmi >= 25 && bmi < 30) {
-                        resultText += "You are overweight.";
-                    } else {
-                        resultText += "You are obese.";
-                    }
-                }
-            }
-    
-            document.getElementById("result").innerHTML = resultText;
+<script>
+    function calculateBMI() {
+        var height = parseFloat(document.getElementById("height").value) / 100; // Convert height to meters
+        var weight = parseFloat(document.getElementById("weight").value);
+        var age = parseInt(document.getElementById("age").value);
+
+        // Check if age is greater than 18
+        if (age <= 18) {
+            document.getElementById("result").innerHTML = "Age must be greater than 18 to calculate BMI.";
+            return; // Exit the function if age is not greater than 18
         }
-    </script>
+
+        var bmi = weight / (height * height);
+        var resultText = "Your BMI is " + bmi.toFixed(2) + ". ";
+
+        if (isNaN(bmi)) {
+            resultText = "Please enter valid height and weight.";
+        } else {
+            if (bmi < 18.5) {
+                resultText += "You are underweight.";
+            } else if (bmi >= 18.5 && bmi < 25) {
+                resultText += "You have a normal weight.";
+            } else if (bmi >= 25 && bmi < 30) {
+                resultText += "You are overweight.";
+            } else {
+                resultText += "You are obese.";
+            }
+        }
+
+        document.getElementById("result").innerHTML = resultText;
+    }
+</script>
+
+
     <br><br><br><br><br><br>
     
     <!-- BMI Calculator Section End -->
@@ -393,8 +396,6 @@
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     {% endblock %}
-
-
 
 </body>
 
